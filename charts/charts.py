@@ -32,10 +32,8 @@ def extreme_heat(df):
 
     import altair as alt
 
-    # Calculate 99th percentile threshold
     threshold = df["temp_max"].quantile(0.99)
 
-    # Base scatterplot (all points)
     base = alt.Chart(df).mark_circle(
         size=40,
         color="lightgray",
@@ -45,7 +43,6 @@ def extreme_heat(df):
         y=alt.Y("temp_max:Q", title="Daily max temp (°C)")
     )
 
-    # Highlight extreme days
     extreme = alt.Chart(df[df["temp_max"] >= threshold]).mark_circle(
         size=70,
         color="red"
@@ -55,7 +52,6 @@ def extreme_heat(df):
         tooltip=["date:T", "temp_max"]
     )
 
-    # Threshold line
     rule = alt.Chart(df).mark_rule(
         color="black",
         strokeDash=[6,6]
